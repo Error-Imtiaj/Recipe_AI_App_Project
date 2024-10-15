@@ -24,15 +24,15 @@ class ChatBubble extends StatelessWidget {
           decoration: BoxDecoration(
             color: isMe ? ColorsUtil.userChatBackgroundColor : Colors.white,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-              bottomRight: !isMe ? Radius.circular(20) : Radius.circular(0),
-              bottomLeft: isMe ? Radius.circular(20) : Radius.circular(0),
+              topLeft: const Radius.circular(20),
+              topRight: const Radius.circular(20),
+              bottomRight: !isMe ? const Radius.circular(20) : const Radius.circular(0),
+              bottomLeft: isMe ? const Radius.circular(20) : const Radius.circular(0),
             ),
           ),
           child: ListTile(
             dense: true,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: Text(
               textOutput,
               style: Theme.of(context)

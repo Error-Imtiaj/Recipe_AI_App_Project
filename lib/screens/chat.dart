@@ -22,15 +22,15 @@ class _ChatPageState extends State<ChatPage> {
   Map<String, dynamic> textUserInput = {};
   List<RecipeModel> botReturn = [];
 
-  // Box for user data
+  // BOX OF USER DATA
   var userBox = Hive.box('user');
 
-  // Fetch recipes from the API
-  Future<List<RecipeModel>> getReq(String query, String API) async {
+  // FETCH RECIPE FROM THE API
+  Future<List<RecipeModel>> getReq(String query, String api) async {
     botReturn.clear(); // Clear botReturn before making a new API request
     final response = await http.get(
       Uri.parse('https://api.api-ninjas.com/v1/recipe?query=$query'),
-      headers: {'X-Api-Key': API},
+      headers: {'X-Api-Key': api},
     );
 
     if (response.statusCode == 200) {
@@ -39,14 +39,11 @@ class _ChatPageState extends State<ChatPage> {
         RecipeModel recipe = RecipeModel.fromJson(i);
         botReturn.add(recipe);
       }
-    } else {
-      print('Error fetching recipes: ${response.statusCode}');
     }
-
     return botReturn;
   }
 
-  // Create a string representation of the first recipe
+  // CREATE A STRING OF THE FIRST RECIPE
   String addtoString(List<RecipeModel> botReturn) {
     if (botReturn.isEmpty) {
       return 'No recipes found. Please try again.';
@@ -59,12 +56,12 @@ class _ChatPageState extends State<ChatPage> {
         'Servings: ${botReturn[0].servings}';
   }
 
-  // Add message to the Hive box and update the UI
+  // ADD MESSAGE TO THE HIVE BOX AND UPDATE THE UI
   void _writeToUser(String message) async {
-    // Track index for storing messages
+    // TRACK INDEX FOR STORING DATA
     int index = userBox.length;
 
-    // Save user message
+    // SAVE USER MESSAGE
     userBox.put(index, {
       'user': message,
       'time': '${DateTime.now().hour}:${DateTime.now().minute}',
@@ -73,10 +70,11 @@ class _ChatPageState extends State<ChatPage> {
     });
     index++;
 
-    // Fetch response from API and save bot message
-    await getReq(message, Apis.API); // Wait for the API response
+    // FETCH RESPONSE AND SAVE TO A VARIABLE
+    await getReq(message, Apis.api);
     String responseMessage = addtoString(botReturn);
 
+    // SAVE BOT MESSAGE TO THE BOX
     userBox.put(index, {
       'user': responseMessage,
       'time': '${DateTime.now().hour}:${DateTime.now().minute}',
@@ -88,10 +86,10 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {});
   }
 
-// clear dialogue
+// CLEAR ALL BOX DATA FUNCTION
   void clearChat() {
     setState(() {
-      userBox.clear(); // Clear chat messages from Hive
+      userBox.clear(); // CLEAR ALL MESSAGE FROM THE HIVE
     });
   }
 
@@ -104,66 +102,84 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          // SOME GAME FROM THE APPBAR
           const Gap(5),
-          // Chat messages
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: userBox.length,
-              itemBuilder: (BuildContext context, int index) {
-                int netIndex = userBox.length - 1 - index;
-                var message = userBox.get(netIndex);
-                return ChatBubble(
-                  textOutput: message['user'].toString(),
-                  time: message['time'].toString(),
-                  isMe: message['isMe'] ?? true,
-                );
-              },
-            ),
-          ),
 
-          // Input field
-          Padding(
-            padding:
-                const EdgeInsets.only(bottom: 10, left: 24, right: 24, top: 5),
-            child: Row(
-              children: [
-                // Text field
-                Expanded(
-                  child: _inputText(sTextController),
-                ),
-                const Gap(10),
-                // Send button
-                IconButton.filled(
-                  iconSize: 40,
-                  style: IconButton.styleFrom(
-                      backgroundColor: ColorsUtil.userChatBackgroundColor),
-                  onPressed: () {
-                    if (sTextController.text.isNotEmpty) {
-                      setState(() {
-                        _writeToUser(sTextController.text);
-                        sTextController.clear();
-                      });
-                    }
-                  },
-                  icon: const Padding(
-                    padding: EdgeInsets.all(2.0),
-                    child: Icon(
-                      Iconsax.directbox_send,
-                      color: Colors.black,
-                      size: 40,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // CHAT MESSAGE
+          _chatMessagesSection(),
+
+          // BOTTOM SECTION OF THE TEXTFIELD AND SEND BUTTON
+          _bottomSection(),
         ],
       ),
     );
   }
 
-  // Input text widget
+  // CHAT MESSAGE SECTION WIDGET
+  Widget _chatMessagesSection() {
+    return Expanded(
+      child: ListView.builder(
+        reverse: true,
+        itemCount: userBox.length,
+        itemBuilder: (BuildContext context, int index) {
+          int netIndex = userBox.length - 1 - index;
+          var message = userBox.get(netIndex);
+          // CHAT BUBBLE WIDGET
+          return ChatBubble(
+            textOutput: message['user'].toString(),
+            time: message['time'].toString(),
+            isMe: message['isMe'] ?? true,
+          );
+        },
+      ),
+    );
+  }
+
+  // BOTTOM SECTION WIDGET [ INPUT FIELD AND SEND BUTTON]
+  Widget _bottomSection() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10, left: 24, right: 24, top: 5),
+      child: Row(
+        children: [
+          // TEXT FIELD
+          Expanded(
+            child: _inputText(sTextController),
+          ),
+          const Gap(10),
+
+          // SEND BUTTON
+          _sendButton(),
+        ],
+      ),
+    );
+  }
+
+  // SEND BUTTON WIDGET
+  Widget _sendButton() {
+    return IconButton.filled(
+      iconSize: 40,
+      style: IconButton.styleFrom(
+          backgroundColor: ColorsUtil.userChatBackgroundColor),
+      onPressed: () {
+        if (sTextController.text.isNotEmpty) {
+          setState(() {
+            _writeToUser(sTextController.text);
+            sTextController.clear();
+          });
+        }
+      },
+      icon: const Padding(
+        padding: EdgeInsets.all(2.0),
+        child: Icon(
+          Iconsax.directbox_send,
+          color: Colors.black,
+          size: 40,
+        ),
+      ),
+    );
+  }
+
+  // INPUT TEXT WIDGET
   Widget _inputText(TextEditingController controller) {
     return TextFormField(
       controller: controller,
