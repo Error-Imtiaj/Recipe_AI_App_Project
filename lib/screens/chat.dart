@@ -22,6 +22,13 @@ class _ChatPageState extends State<ChatPage> {
   Map<String, dynamic> textUserInput = {};
   List<RecipeModel> botReturn = [];
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    sTextController.dispose();
+    super.dispose();
+  }
+
   // BOX OF USER DATA
   var userBox = Hive.box('user');
 
