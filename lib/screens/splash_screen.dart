@@ -5,6 +5,7 @@ import 'package:recipe_ai/screens/chat.dart';
 import 'package:recipe_ai/utils/animation.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const String text = '/splashScreen';
   const SplashScreen({super.key});
 
   @override

@@ -11,6 +11,7 @@ import 'package:recipe_ai/widget/r_app_bar.dart';
 import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
+  static const String text = '/chatPage';
   const ChatPage({super.key});
 
   @override

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recipe_ai/controller_binders.dart';
+import 'package:recipe_ai/screens/chat.dart';
 import 'package:recipe_ai/screens/splash_screen.dart';
 
 class RecipeApp extends StatelessWidget {
@@ -11,10 +14,15 @@ class RecipeApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(410, 900), // Replace with your design size
       builder: (context, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const SplashScreen(),
+          initialRoute: SplashScreen.text,
+          initialBinding: ControllerBinders(),
           theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
+          routes: {
+            SplashScreen.text: (context) => const SplashScreen(),
+            ChatPage.text: (context) => const ChatPage(),
+          },
         );
       },
     );
