@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:recipe_ai/screens/chat.dart';
 import 'package:recipe_ai/utils/animation.dart';
@@ -15,9 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> _navigateToSplashScreen() {
     return Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return const ChatPage();
-      }));
+      Get.offAllNamed(ChatPage.text);
     });
   }
 
