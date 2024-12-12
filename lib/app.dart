@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_ai/controller_binders.dart';
-import 'package:recipe_ai/screens/chat.dart';
-import 'package:recipe_ai/screens/splash_screen.dart';
+import 'package:recipe_ai/screens/ui/chat.dart';
+import 'package:recipe_ai/screens/ui/splash_screen.dart';
 
 class RecipeApp extends StatelessWidget {
   const RecipeApp({super.key});
