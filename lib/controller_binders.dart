@@ -7,6 +7,6 @@ class ControllerBinders extends Bindings {
   void dependencies() {
     // TODO: implement dependencies
     Get.put(SplashScreenController());
-    Get.put(ChatpageController());
+    Get.put(ChatController());
   }
 }

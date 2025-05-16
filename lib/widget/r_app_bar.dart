@@ -13,23 +13,23 @@ class RappBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   //  IMPLEMENT PREFERREDSIZE
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(80);
 }
 
 class _RappBarState extends State<RappBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 100,
+      toolbarHeight: 70,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.elliptical(70, 40),
-          bottomRight: Radius.elliptical(70, 40),
-        ),
+            // bottomLeft: Radius.elliptical(70, 40),
+            // bottomRight: Radius.elliptical(70, 40),
+            ),
       ),
-      backgroundColor: ColorsUtil.appBarColor,
+      backgroundColor: ColorsUtil.appbarBackgroundColor,
       title: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 0),
         child: Row(
           children: [
             // PICTURE OF BOT
@@ -87,10 +87,9 @@ class _RappBarState extends State<RappBar> {
             // Online text
             Text(
               "Online",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleSmall
-                  ?.copyWith(color: Colors.grey),
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: ColorsUtil.appBackgroundColor,
+                  fontWeight: FontWeight.w600),
             )
           ],
         )
@@ -114,6 +113,7 @@ class _RappBarState extends State<RappBar> {
   // BOTTOM SHEET
   PersistentBottomSheetController _showBottomSheet() {
     return showBottomSheet(
+      shape: ContinuousRectangleBorder(),
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
@@ -122,7 +122,9 @@ class _RappBarState extends State<RappBar> {
           child: Container(
             height: 150,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -139,6 +141,7 @@ class _RappBarState extends State<RappBar> {
 
                 // DEVELOPER TEXT
                 _developerText(),
+                Gap(16),
               ],
             ),
           ),
@@ -153,7 +156,7 @@ class _RappBarState extends State<RappBar> {
       child: Center(
         child: TextButton(
             style: TextButton.styleFrom(
-                backgroundColor: ColorsUtil.backgroundColor,
+                backgroundColor: ColorsUtil.buttonBackgroundColor,
                 shape: const ContinuousRectangleBorder()),
             onPressed: () {
               widget.onClearChat(); // Trigger callback
@@ -161,10 +164,10 @@ class _RappBarState extends State<RappBar> {
             },
             child: Text(
               "Clear Chat",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold, fontSize: 14),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: ColorsUtil.buttonTextColor),
             )),
       ),
     );

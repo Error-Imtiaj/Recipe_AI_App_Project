@@ -16,12 +16,12 @@ class RecipeApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: SplashScreen.text,
+          initialRoute: SplashScreen.routeName,
           initialBinding: ControllerBinders(),
           theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
           routes: {
-            SplashScreen.text: (context) => const SplashScreen(),
-            ChatPage.text: (context) => const ChatPage(),
+            SplashScreen.routeName: (context) => const SplashScreen(),
+            ChatPage.routename: (context) => ChatPage(),
           },
         );
       },

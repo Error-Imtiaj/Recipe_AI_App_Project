@@ -22,12 +22,16 @@ class ChatBubble extends StatelessWidget {
         widthFactor: 0.8,
         child: Container(
           decoration: BoxDecoration(
-            color: isMe ? ColorsUtil.userChatBackgroundColor : Colors.white,
+            color: isMe
+                ? ColorsUtil.buttonBackgroundColor
+                : ColorsUtil.roboChatBackgroundColor,
             borderRadius: BorderRadius.only(
               topLeft: const Radius.circular(20),
               topRight: const Radius.circular(20),
-              bottomRight: !isMe ? const Radius.circular(20) : const Radius.circular(0),
-              bottomLeft: isMe ? const Radius.circular(20) : const Radius.circular(0),
+              bottomRight:
+                  !isMe ? const Radius.circular(20) : const Radius.circular(0),
+              bottomLeft:
+                  isMe ? const Radius.circular(20) : const Radius.circular(0),
             ),
           ),
           child: ListTile(
@@ -35,13 +39,18 @@ class ChatBubble extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: Text(
               textOutput,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontSize: 14),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: 14,
+                  color: isMe
+                      ? ColorsUtil.userChatColor
+                      : ColorsUtil.roboChatColor),
             ),
             subtitle: Text(
               '$time AM',
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: isMe
+                      ? ColorsUtil.userChatTimeColor
+                      : ColorsUtil.roboTimeColor),
             ),
           ),
         ),
