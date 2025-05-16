@@ -2,7 +2,7 @@
 <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="recipe_ai"
+        android:label="Recipe Ai"
         android:name="${applicationName}"
         android:icon="@mipmap/recipe">
         <activity
